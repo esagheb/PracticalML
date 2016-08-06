@@ -1,0 +1,771 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=Generator content="Microsoft Word 14 (filtered)">
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"B Nazanin";
+	panose-1:0 0 4 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:Tahoma;
+	panose-1:2 11 6 4 3 5 4 4 2 4;}
+@font-face
+	{font-family:"Lucida Console";
+	panose-1:2 11 6 9 4 5 4 2 2 4;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0in;
+	margin-right:0in;
+	margin-bottom:10.0pt;
+	margin-left:0in;
+	line-height:115%;
+	font-size:14.0pt;
+	font-family:"Times New Roman","serif";}
+h2
+	{mso-style-link:"Heading 2 Char";
+	margin-right:0in;
+	margin-left:0in;
+	font-size:18.0pt;
+	font-family:"Times New Roman","serif";}
+code
+	{font-family:"Courier New";}
+pre
+	{mso-style-link:"HTML Preformatted Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:10.0pt;
+	font-family:"Courier New";}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
+	{mso-style-link:"Balloon Text Char";
+	margin:0in;
+	margin-bottom:.0001pt;
+	font-size:8.0pt;
+	font-family:"Tahoma","sans-serif";}
+span.Heading2Char
+	{mso-style-name:"Heading 2 Char";
+	mso-style-link:"Heading 2";
+	font-family:"Times New Roman","serif";
+	font-weight:bold;}
+span.HTMLPreformattedChar
+	{mso-style-name:"HTML Preformatted Char";
+	mso-style-link:"HTML Preformatted";
+	font-family:"Courier New";}
+span.BalloonTextChar
+	{mso-style-name:"Balloon Text Char";
+	mso-style-link:"Balloon Text";
+	font-family:"Tahoma","sans-serif";}
+span.identifier
+	{mso-style-name:identifier;}
+span.operator
+	{mso-style-name:operator;}
+span.keyword
+	{mso-style-name:keyword;}
+span.paren
+	{mso-style-name:paren;}
+.MsoChpDefault
+	{font-size:14.0pt;}
+.MsoPapDefault
+	{margin-bottom:10.0pt;
+	line-height:115%;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:40.5pt 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+-->
+</style>
+
+</head>
+
+<body lang=EN-US>
+
+<div class=WordSection1>
+
+<p class=MsoNormal>Practical Machine Learning</p>
+
+<div style='border:none;border-bottom:solid windowtext 1.0pt;padding:0in 0in 1.0pt 0in'>
+
+<p class=MsoNormal style='border:none;padding:0in'>Assignment: Prediction
+Assignment Write-up</p>
+
+</div>
+
+<p class=MsoNormal><span style='font-size:12.0pt;line-height:115%'>The data has
+been downloaded from the links presented in the assignment. I load the data and
+then take a close look at the data and the classes’ field, denoting the
+miscellaneous NA, #DIV/0!, and empty fields as NA. </span></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>R
+commands:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;border:none;padding:0in'><span style='font-size:12.0pt;font-family:"Calibri","sans-serif";
+color:#76923C'>setwd(&quot;D:/PML&quot;)  # or any directory of your choice</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;border:none;padding:0in'><span style='font-size:12.0pt;font-family:"Calibri","sans-serif";
+color:#76923C'>Mytrainingset &lt;- read.csv(&quot;pml-training.csv&quot;,
+na.strings = c(&quot;NA&quot;, &quot;#DIV/0!&quot;, &quot;&quot;))</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;border:none;padding:0in'><span style='font-size:12.0pt;font-family:"Calibri","sans-serif";
+color:#76923C'>Mytestingset  &lt;- read.csv(&quot;pml-testing.csv&quot;, 
+na.strings = c(&quot;NA&quot;, &quot;#DIV/0!&quot;, &quot;&quot;))</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;border:none;padding:0in'><span style='font-size:12.0pt;font-family:"Calibri","sans-serif";
+color:#76923C'>str(Mytrainingset, list.len=18)</span></p>
+
+</div>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal'><span style='font-size:12.0pt;font-family:"Calibri","sans-serif";
+color:#76923C'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>Outputs:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'>'data.frame':    19622
+obs. of  160 variables:</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+X                       : int  1 2 3 4 5 6 7 8 9 10 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+user_name               : Factor w/ 6 levels
+&quot;adelmo&quot;,&quot;carlitos&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+raw_timestamp_part_1    : int  1323084231 1323084231 1323084231 1323084232
+1323084232 1323084232 1323084232 1323084232 1323084232 1323084232 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+raw_timestamp_part_2    : int  788290 808298 820366 120339 196328 304277 368296
+440390 484323 484434 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+cvtd_timestamp          : Factor w/ 20 levels &quot;02/12/2011 13:32&quot;,..:
+9 9 9 9 9 9 9 9 9 9 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+new_window              : Factor w/ 2 levels &quot;no&quot;,&quot;yes&quot;: 1
+1 1 1 1 1 1 1 1 1 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+num_window              : int  11 11 11 12 12 12 12 12 12 12 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+roll_belt               : num  1.41 1.41 1.42 1.48 1.48 1.45 1.42 1.42 1.43
+1.45 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+pitch_belt              : num  8.07 8.07 8.07 8.05 8.07 8.06 8.09 8.13 8.16
+8.17 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+yaw_belt                : num  -94.4 -94.4 -94.4 -94.4 -94.4 -94.4 -94.4 -94.4
+-94.4 -94.4 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+total_accel_belt        : int  3 3 3 3 3 3 3 3 3 3 ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+kurtosis_roll_belt      : num  NA NA NA NA NA NA NA NA NA NA ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+kurtosis_picth_belt     : num  NA NA NA NA NA NA NA NA NA NA ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+kurtosis_yaw_belt       : logi  NA NA NA NA NA NA ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+skewness_roll_belt      : num  NA NA NA NA NA NA NA NA NA NA ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+skewness_roll_belt.1    : num  NA NA NA NA NA NA NA NA NA NA ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+skewness_yaw_belt       : logi  NA NA NA NA NA NA ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'> $
+max_roll_belt           : num  NA NA NA NA NA NA NA NA NA NA ...</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'>  [list
+output truncated]</span></p>
+
+</div>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all'><span style='font-size:8.0pt;font-family:"Lucida Console";
+color:black;background:#E1E2E5'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all'><span style='font-size:8.0pt;font-family:"Lucida Console";
+color:black;background:#E1E2E5'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>R
+commands:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>table(Mytrainingset$classe)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>prop.table(table(Mytrainingset$user_name,
+training$classe), 1)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>prop.table(table(Mytrainingset$classe))</span></p>
+
+</div>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all'><span style='font-size:8.0pt;font-family:"Lucida Console";
+color:black;background:#E1E2E5'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all'><span style='font-size:8.0pt;font-family:"Lucida Console";
+color:black;background:#E1E2E5'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>Outputs:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>A    B    C    D    E </span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>5580 3797 3422 3216 3607 </span></pre>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'>&nbsp;</span></p>
+
+<pre style='word-break:break-all;border:none;padding:0in'><span
+style='font-family:"Lucida Console";color:black;background:#E1E2E5'>adelmo   0.2993320 0.1993834 0.1927030 0.1323227 0.1762590</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  carlitos 0.2679949 0.2217224 0.1584190 0.1561697 0.1956941</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  charles  0.2542421 0.2106900 0.1524321 0.1815611 0.2010747</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  eurico   0.2817590 0.1928339 0.1592834 0.1895765 0.1765472</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  jeremy   0.3459730 0.1437390 0.1916520 0.1534392 0.1651969</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  pedro    0.2452107 0.1934866 0.1911877 0.1796935 0.1904215</span></pre>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+8.0pt;font-family:"Lucida Console";color:black;background:#E1E2E5'>&nbsp;</span></p>
+
+<pre style='word-break:break-all;border:none;padding:0in'><span
+style='font-family:"Lucida Console";color:black;background:#E1E2E5'>A         B         C         D         E </span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>0.2843747 0.1935073 0.1743961 0.1638977 0.1838243 </span></pre></div>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal;word-break:break-all'><span style='font-size:12.0pt'>I
+am going to perform data clean-up by removing columns 1 to 6, which are only
+for reference   purposes. I also need to delete columns that are NA.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal;word-break:break-all'><span style='font-size:12.0pt'>Before
+I can go further with the data analysis tasks, I am going to split the training
+set into two   set for the purpose of cross validation. I am going to randomly
+subsample <b>60% of the dataset    for training </b>and <b>40% for testing</b>.
+These sections will be then used for evaluation and accuracy           measurement.</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all'><span style='font-size:8.0pt;font-family:"Lucida Console";
+color:black;background:#E1E2E5'>&nbsp;</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all'><span style='font-size:8.0pt;font-family:"Lucida Console";
+color:black;background:#E1E2E5'>&nbsp;</span></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>R
+commands:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>trainingset &lt;-
+Mytrainingset[, 7:160]</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>testingset  &lt;-
+Mytestingset[, 7:160]</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>is_data  &lt;-
+apply(!is.na(trainingset), 2, sum) &gt; 19621  </span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>trainingset &lt;-
+trainingset[, is_data]</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>testingset  &lt;-
+testingset[, is_data]</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>library(caret)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>set.seed(3141592)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>train &lt;-
+createDataPartition(y=trainingset$classe, p=0.60, list=FALSE)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>trainf  &lt;-
+trainingset[train,]</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>trains  &lt;-
+trainingset[-train,]</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>dim(trainf)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>dim(trains)</span></p>
+
+</div>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>Outputs</span></b>:
+</p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>[1] 11776    54</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>[1] 7846   54</span></pre></div>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;text-align:
+justify;line-height:normal;word-break:break-all'><span style='font-size:12.0pt'>The
+<b><u>trainf</u></b><u> </u> has been the training set which includes 11776
+observations, and <b><u>trains</u></b> has been the   testing set that includes
+7846 observations The <b><u>trains</u></b> would be utilized for accuracy
+measurements.</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>R
+Commands: </span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>nzv_cols &lt;-
+nearZeroVar(trainf)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>if(length(nzv_cols)
+&gt; 0) {</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>  trainf &lt;-
+trainf[, -nzv_cols]</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>  trains &lt;-
+trains[, -nzv_cols]</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>}</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>dim(trainf)</span></p>
+
+</div>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>Outputs</span></b>:
+</p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>[1] 11776    54</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>[1] 7846   54</span></pre></div>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>R
+Commands:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>library(randomForest)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>set.seed(3141592)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>Mymodel &lt;-
+randomForest(classe~., data=trainf, importance=TRUE, ntree=100)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>varImpPlot(Mymodel)</span></p>
+
+</div>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>Outputs:</span></b></p>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span
+style='font-size:12.0pt;line-height:115%'><img width=562 height=401
+id="Picture 3" src="image001.jpg"></span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>R Commands:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>crl =
+cor(trainf[,c(&quot;yaw_belt&quot;,&quot;roll_belt&quot;,&quot;num_window&quot;,&quot;pitch_belt&quot;,&quot;magnet_dumbbell_z&quot;,&quot;magnet_dumbbell_y&quot;,&quot;pitch_forearm&quot;,&quot;accel_dumbbell_y&quot;,&quot;roll_arm&quot;,&quot;roll_forearm&quot;)])</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>diag(crl) &lt;- 0</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>which(abs(crl)&gt;0.75,
+arr.ind=TRUE)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>cor(trainf$roll_belt, trainf$yaw_belt)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>qplot(roll_belt,
+magnet_dumbbell_y, colour=classe, data=trainf)</span></p>
+
+</div>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>Outputs: </span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 1.0pt 1.0pt 1.0pt'><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>row col</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>roll_belt   2   1</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>yaw_belt    1   2</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>&nbsp;</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>[1] 0.8152349</span></pre></div>
+
+<pre style='word-break:break-all'><span style='font-family:"Lucida Console";
+color:black;background:#E1E2E5'>&nbsp;</span></pre><pre style='word-break:break-all'><span
+style='font-family:"Lucida Console";color:black;background:#E1E2E5'>&nbsp;</span></pre><pre
+style='word-break:break-all'><span style='font-family:"Lucida Console";
+color:black;background:#E1E2E5'>&nbsp;</span></pre>
+
+<p class=MsoNormal align=center style='text-align:center'><b><span
+style='font-size:12.0pt;line-height:115%'><img width=500 height=356
+id="Picture 4" src="image002.jpg"></span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>R
+Commands:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>library(rpart.plot)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>Mymodel &lt;-
+rpart(classe~., data=trainf, method=&quot;class&quot;)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>prp(Mymodel)</span></p>
+
+</div>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>Output:</span></b><img
+width=624 height=328 id="Picture 1"
+src="image003.jpg"></p>
+
+<p class=MsoNormal><span style='font-size:12.0pt;line-height:115%'>I am going
+to make the model now and measure the accuracy of the prediction model.  </span></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>R
+Commands:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 4.0pt 1.0pt 4.0pt'>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>set.seed(3141592)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>Mymodel &lt;-
+randomForest(classe~., data=trainf, importance=TRUE, ntree=100)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>varImpPlot(Mymodel)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>crl =
+cor(trainf[,c(&quot;yaw_belt&quot;,&quot;roll_belt&quot;,&quot;num_window&quot;,&quot;pitch_belt&quot;,&quot;magnet_dumbbell_z&quot;,&quot;magnet_dumbbell_y&quot;,&quot;pitch_forearm&quot;,&quot;accel_dumbbell_y&quot;,&quot;roll_arm&quot;,&quot;roll_forearm&quot;)])</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>diag(crl) &lt;- 0</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>which(abs(crl)&gt;0.75,
+arr.ind=TRUE)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>cor(trainf$roll_belt,
+trainf$yaw_belt)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>qplot(roll_belt,
+magnet_dumbbell_y, colour=classe, data=trainf)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>set.seed(3141592)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>Mymodel &lt;-
+train(classe~roll_belt+num_window+pitch_belt+magnet_dumbbell_y+magnet_dumbbell_z+pitch_forearm+accel_dumbbell_y+roll_arm+roll_forearm,data=trainf,
+method=&quot;rf&quot;, trControl=trainControl(method=&quot;cv&quot;,number=2),
+prox=TRUE, verbose=TRUE, allowParallel=TRUE)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>saveRDS(Mymodel,
+&quot;predictionmodel.Rds&quot;)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>Model &lt;-
+readRDS(&quot;predictionmodel.Rds&quot;)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>predictions &lt;-
+predict(Model, newdata=trains)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>confusionMat &lt;-
+confusionMatrix(predictions, trains$classe)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>confusionMat</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>missClass =
+function(values, predicted) {</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>  sum(predicted !=
+values) / length(values)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>}</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>outS_errorRate =
+missClass(trains$classe, predictions)</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>outS_errorRate</span></p>
+
+<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;word-break:break-all;border:none;padding:0in'><span style='font-size:
+12.0pt;font-family:"Calibri","sans-serif";color:#76923C'>&nbsp;</span></p>
+
+</div>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>&nbsp;</span></b></p>
+
+<p class=MsoNormal><b><span style='font-size:12.0pt;line-height:115%'>Outputs:</span></b></p>
+
+<div style='border:solid windowtext 1.0pt;padding:1.0pt 1.0pt 1.0pt 1.0pt'><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>Confusion Matrix and Statistics</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>          Reference</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>Prediction    A    B    C    D    E</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>          A 2231   2    0    0    0</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>          B    1 1512   0    0    1</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>          C    0    3 1368   6    1</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>          D    0    1    0 1280   3</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>          E    0    0    0    0 1437</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Overall Statistics</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>                 Accuracy : 0.9977          </span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>                   95% CI : (0.9964, 0.9986)</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>      No Information Rate : 0.2845          </span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>      P-Value [Acc &gt; NIR] : &lt; 2.2e-16       </span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>                     Kappa : 0.9971          </span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>   Mcnemar's Test P-Value : NA              </span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Statistics by Class:</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>                         Class: A Class: B Class: C Class: D Class: E</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Sensitivity            0.9996   0.9960   1.0000   0.9953   0.9965</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Specificity            0.9996   0.9997   0.9985   0.9994   1.0000</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Pos Pred Value         0.9991   0.9987   0.9927   0.9969   1.0000</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Neg Pred Value         0.9998   0.9991   1.0000   0.9991   0.9992</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Prevalence             0.2845   0.1935   0.1744   0.1639   0.1838</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Detection Rate         0.2843   0.1927   0.1744   0.1631   0.1832</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Detection Prevalence   0.2846   0.1930   0.1756   0.1637   0.1832</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>  Balanced Accuracy      0.9996   0.9979   0.9992   0.9974   0.9983</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>&nbsp;</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>[1] 0.002294163</span></pre><pre
+style='word-break:break-all;border:none;padding:0in'><span style='font-family:
+"Lucida Console";color:black;background:#E1E2E5'>&nbsp;</span></pre></div>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal><span style='font-size:12.0pt;line-height:115%'>As you can
+see, I got <b>99.77% accuracy</b>. The <b>out-of-sample error</b> <b>rate</b>
+has been <b>0.229%</b>. </span></p>
+
+<p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
+line-height:115%'>The assignment has been very useful to me in the sense of
+practical machine learning techniques, and it helped much to investigate machine
+learning algorithms and strategies using R programming language.</span></p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+<p class=MsoNormal>&nbsp;</p>
+
+</div>
+
+</body>
+
+</html>
